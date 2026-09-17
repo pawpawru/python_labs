@@ -66,10 +66,16 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
     elif not all(len(i) == len(mat[0]) for i in mat):
         raise ValueError("Есть строки разной длины")
     else:
-        # функция не доделана
+        total_sum = [0 for col in mat[0]]
+        for row in mat:
+            for col in row:
+                indx = row.index(col)
+                total_sum[indx] += col
+        return total_sum
+                
 if __name__ == "__main__":
     # TEST transpose
-    '''print(transpose([[1, 2, 3]]))
+    print(transpose([[1, 2, 3]]))
     print(transpose([[1], [2], [3]]))
     print(transpose([[1, 2], [3, 4]]))
     print(transpose([]))
@@ -78,5 +84,9 @@ if __name__ == "__main__":
     print(row_sums([[1, 2, 3], [4, 5, 6]]))
     print(row_sums([[-1, 1], [10, -10]]))
     print(row_sums([[0, 0], [0, 0]]))
-    print(row_sums([[1, 2], [3]]))'''
+    print(row_sums([[1, 2], [3]]))
     # TEST col_sums
+    print(col_sums([[1, 2, 3], [4, 5, 6]]))
+    print(col_sums([[-1, 1], [10, -10]]))
+    print(col_sums([[0, 0], [0, 0]]))
+    print(col_sums([[1, 2], [3]]))

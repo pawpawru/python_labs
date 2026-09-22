@@ -23,7 +23,7 @@ def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
             maximum = x
     return minimum, maximum
 ```
-![Вывод min_max](images/lab_2/img_01.png)
+![Вывод min_max](../../images/lab_2/img_01.png)
 
 ```python
 def unique_sorted(nums: list[float | int]) -> list[float | int]:
@@ -44,6 +44,7 @@ def unique_sorted(nums: list[float | int]) -> list[float | int]:
         unique_nums[j + 1] = key # вставляем нужный элемент в освободившееся место
     return unique_nums
 ```
+![Вывод unique_sorted](../../images/lab_2/img_02.png)
 
 ```python
 def flatten(mat: list[list | tuple]) -> list:
@@ -65,3 +66,4 @@ def flatten(mat: list[list | tuple]) -> list:
             row_major.append(item)
     return row_major
 ```
+![Вывод flatten](../../images/lab_2/img_03.png)

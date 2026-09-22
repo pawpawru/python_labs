@@ -25,6 +25,8 @@ def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
 ```
 ![Вывод min_max](../../images/lab_2/img_01.png)
 
+Рис. 1. Результат выполнения arrays.py min_max (нахождение минимума и максимума списка)
+
 ```python
 def unique_sorted(nums: list[float | int]) -> list[float | int]:
     """
@@ -45,6 +47,8 @@ def unique_sorted(nums: list[float | int]) -> list[float | int]:
     return unique_nums
 ```
 ![Вывод unique_sorted](../../images/lab_2/img_02.png)
+
+Рис. 2. Результат выполнения arrays.py unique_sorted (возвращение отсортированых уникальных элементов списка)
 
 ```python
 def flatten(mat: list[list | tuple]) -> list:
@@ -67,6 +71,8 @@ def flatten(mat: list[list | tuple]) -> list:
     return row_major
 ```
 ![Вывод flatten](../../images/lab_2/img_03.png)
+
+Рис. 3. Результат выполнения arrays.py flatten (перевод матрицы в вектор)
 
 Задача № 2
 ```python
@@ -96,6 +102,8 @@ def transpose(mat: list[list[float | int]]) -> list[list]:
 ```
 ![Вывод transpose](../../images/lab_2/img_04.png)
 
+Рис. 4. Результат выполнения matrix.py transpose (транспонирование матрицы)
+
 ```python
 def row_sums(mat: list[list[float | int]]) -> list[float]:
     """
@@ -117,6 +125,8 @@ def row_sums(mat: list[list[float | int]]) -> list[float]:
 ```
 ![Вывод row_sums](../../images/lab_2/img_05.png)
 
+Рис. 5. Результат выполнения matrix.py row_sums (нахождение суммы каждой строки матрицы)
+
 ```python
 def col_sums(mat: list[list[float | int]]) -> list[float]:
     """
@@ -137,6 +147,8 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
         return row_sums(transpose(mat))
 ```
 ![Вывод col_sums](../../images/lab_2/img_06.png)
+
+Рис. 6. Результат выполнения matrix.py col_sums (нахождение суммы каждого столбца матрицы)
 
 Задание № 3
 ```python
@@ -173,3 +185,5 @@ def format_record(rec: tuple[str, str, float]) -> str:
     return f'"{last_name} {name}{patronymic}, гр. {group}, GPA {gpa:.2f}"'
 ```
 ![Вывод format_record](../../images/lab_2/img_07.png)
+
+Рис. 7. Результат выполнения tuples.py (форматирование записей)

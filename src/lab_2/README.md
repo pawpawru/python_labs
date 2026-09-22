@@ -33,4 +33,4 @@
 Задача № 3
 # TEST format_record
 
-![Скриншот задачи №2.4](../../images/lab_2/img_09.png)
+![Скриншот задачи №3](../../images/lab_2/img_09.png)

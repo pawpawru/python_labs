@@ -67,3 +67,73 @@ def flatten(mat: list[list | tuple]) -> list:
     return row_major
 ```
 ![Вывод flatten](../../images/lab_2/img_03.png)
+
+Задача № 2
+```python
+def transpose(mat: list[list[float | int]]) -> list[list]:
+    """
+    Параметры:
+        mat: матрица.
+    
+    Возвращает:
+        Транспонированная матрица.
+    
+    Вызывает:
+        ValueError: если строки разной длины (не прямоугольная матрица).
+    """
+    if not mat:
+        return []
+    elif not all(len(i) == len(mat[0]) for i in mat):
+        raise ValueError("Есть строки разной длины")
+    else:
+        rows_len = len(mat)
+        columns_len = len(mat[0])
+        transposed_mat = [[0] * rows_len for i in range(columns_len)]
+        for rows in range(rows_len):
+            for columns in range(columns_len):
+                transposed_mat[columns][rows] = mat[rows][columns]
+        return transposed_mat
+```
+![Вывод transpose](../../images/lab_2/img_04.png)
+
+```python
+def row_sums(mat: list[list[float | int]]) -> list[float]:
+    """
+    Параметры:
+        mat: матрица.
+        
+    Возвращает:
+        Сумма каждой строки.
+        
+    Вызывает:
+        ValueError: если строки разной длины (не прямоугольная матрица).
+    """
+    if not mat:
+        return []
+    elif not all(len(i) == len(mat[0]) for i in mat):
+        raise ValueError("Есть строки разной длины")
+    else:
+        return [sum(i) for i in mat]
+```
+![Вывод row_sums](../../images/lab_2/img_05.png)
+
+```python
+def col_sums(mat: list[list[float | int]]) -> list[float]:
+    """
+    Параметры:
+        mat: матрица.
+        
+    Возвращает:
+        Сумма каждого столбца.
+        
+    Вызывает:
+        ValueError: если строки разной длины (не прямоугольная матрица).    
+    """
+    if not mat:
+            return "Пустая матрица"
+    elif not all(len(i) == len(mat[0]) for i in mat):
+        raise ValueError("Есть строки разной длины")
+    else:
+        return row_sums(transpose(mat))
+```
+![Вывод col_sums](../../images/lab_2/img_06.png)

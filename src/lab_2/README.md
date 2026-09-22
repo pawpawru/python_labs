@@ -23,6 +23,7 @@ def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
             maximum = x
     return minimum, maximum
 ```
+![Вывод min_max](images/lab_2/img_01.png)
 
 ```python
 def unique_sorted(nums: list[float | int]) -> list[float | int]:

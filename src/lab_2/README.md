@@ -1,7 +1,7 @@
 Лабораторная работа № 2
 
 Задача № 1
-'''
+
 def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
     """
     Параметры:
@@ -66,13 +66,13 @@ if __name__ == "__main__":
     print(flatten([[1, 2], (3, 4, 5)]))
     print(flatten([[1], [], [2, 3]]))
     print(flatten([[1, 2], "ab"]))
-'''
+
 ![Скриншот задачи №1.1](../../images/lab_2/img_02.png)
 ![Скриншот задачи №1.2](../../images/lab_2/img_03.png)
 ![Скриншот задачи №1.3](../../images/lab_2/img_04.png)
 
 Задача № 2
-'''
+
 def transpose(mat: list[list[float | int]]) -> list[list]:
     """
     Параметры:
@@ -165,13 +165,13 @@ if __name__ == "__main__":
     print(col_sums([[-1, 1], [10, -10]]))
     print(col_sums([[0, 0], [0, 0]]))
     print(col_sums([[1, 2], [3]]))
-'''
+
 ![Скриншот задачи №2.1](../../images/lab_2/img_06.png)
 ![Скриншот задачи №2.2](../../images/lab_2/img_07.png)
 ![Скриншот задачи №2.3](../../images/lab_2/img_08.png)
 
 Задача № 3
-'''
+
 def format_record(rec: tuple[str, str, float]) -> str:
     """
     Параметры:
@@ -208,5 +208,5 @@ if __name__ == "__main__":
     print(format_record(("Петров Пётр", "IKBO-12", 5.0)))
     print(format_record(("Петров Пётр Петрович", "IKBO-12", 5.0)))
     print(format_record(("  сидорова  анна   сергеевна ", "ABB-01", 3.999)))
-'''
+
 ![Скриншот задачи №3](../../images/lab_2/img_09.png)

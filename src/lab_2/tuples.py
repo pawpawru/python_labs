@@ -10,9 +10,9 @@ def format_record(rec: tuple[str, str, float]) -> str:
         ValueError: если пустое ФИО или пустая группа.
         TypeError: если неверный тип GPA.
     """
-    if not rec[0]:
+    if not rec[0].strip():
         raise ValueError("пустое ФИО")
-    if not rec[1]:
+    if not rec[1].strip():
         raise ValueError("пустая группа")
     if not isinstance(rec[2], float):
         raise TypeError("неверный тип GPA")
@@ -28,7 +28,7 @@ def format_record(rec: tuple[str, str, float]) -> str:
         patronymic = initials[2][0] + '.'
     group = rec[1]
     gpa = rec[2]
-    return f'{last_name} {name}{patronymic}, гр. {group}, GPA {gpa:.2f}'
+    return f'"{last_name} {name}{patronymic}, гр. {group}, GPA {gpa:.2f}"'
 if __name__ == "__main__":
     print('("Иванов Иван Иванович", "BIVT-25", 4.6) ->', format_record(("Иванов Иван Иванович", "BIVT-25", 4.6)))
     print('("Петров Пётр", "IKBO-12", 5.0) ->', format_record(("Петров Пётр", "IKBO-12", 5.0)))

@@ -1,7 +1,7 @@
 Лабораторная работа № 2
 
 Задача № 1 
-'''
+```python
 def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
     """
     Параметры:
@@ -22,8 +22,9 @@ def min_max(nums: list[float | int]) -> tuple[float | int, float | int]:
         if x > maximum:
             maximum = x
     return minimum, maximum
-'''
-'''
+```
+
+```python
 def unique_sorted(nums: list[float | int]) -> list[float | int]:
     """
     Параметры:
@@ -41,8 +42,9 @@ def unique_sorted(nums: list[float | int]) -> list[float | int]:
             j -= 1
         unique_nums[j + 1] = key # вставляем нужный элемент в освободившееся место
     return unique_nums
-'''
-'''
+```
+
+```python
 def flatten(mat: list[list | tuple]) -> list:
     """
     Параметры:
@@ -61,4 +63,4 @@ def flatten(mat: list[list | tuple]) -> list:
         for item in row:
             row_major.append(item)
     return row_major
-'''
+```

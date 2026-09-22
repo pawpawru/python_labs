@@ -22,13 +22,9 @@
 
 ![Скриншот задачи №2.1](../../images/lab_2/img_05.png)
 
-# TEST transpose ошибка
-
-![Скриншот задачи №2.2](../../images/lab_2/img_06.png)
-
 # TEST row_sums
 
-![Скриншот задачи №2.3](../../images/lab_2/img_07.png)
+![Скриншот задачи №2.2](../../images/lab_2/img_06.png)
 
 # TEST col_sums
 

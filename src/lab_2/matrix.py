@@ -75,7 +75,7 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
                 
 if __name__ == "__main__":
     # TEST transpose
-    '''print(transpose([[1, 2, 3]]))
+    print(transpose([[1, 2, 3]]))
     print(transpose([[1], [2], [3]]))
     print(transpose([[1, 2], [3, 4]]))
     print(transpose([]))
@@ -85,7 +85,6 @@ if __name__ == "__main__":
     print(row_sums([[-1, 1], [10, -10]]))
     print(row_sums([[0, 0], [0, 0]]))
     print(row_sums([[1, 2], [3]]))
-    '''
     # TEST col_sums
     print(col_sums([[1, 2, 3], [4, 5, 6]]))
     print(col_sums([[-1, 1], [10, -10]]))

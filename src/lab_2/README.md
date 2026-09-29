@@ -74,6 +74,7 @@ def flatten(mat: list[list | tuple]) -> list:
 
 Рис. 3. Результат выполнения arrays.py flatten (перевод матрицы в вектор)
 
+
 Задача № 2
 ```python
 def transpose(mat: list[list[float | int]]) -> list[list]:
@@ -150,39 +151,60 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
 
 Рис. 6. Результат выполнения matrix.py col_sums (нахождение суммы каждого столбца матрицы)
 
+
 Задание № 3
 ```python
 def format_record(rec: tuple[str, str, float]) -> str:
     """
     Параметры:
         rec: кортеж вида: (fio: str, group: str, gpa: float).
-            
+
     Возвращает:
         Строка вида: Иванов И.И., гр. BIVT-25, GPA 4.60.
-            
+
     Вызывает:
-        ValueError: если пустое ФИО или пустая группа.
-        TypeError: если неверный тип GPA.
+        TypeError:
+            - если rec не является кортежем;
+            - если ФИО или группа не являются строками;
+            - если GPA не является числом.
+        ValueError:
+            - если кортеж содержит не 3 элемента;
+            - если после удаления пробелов ФИО оказывается пустым;
+            - если после удаления пробелов группа оказывается пустой;
+            - если количество частей в ФИО не равно 2 или 3;
+            - если значение GPA выходит за диапазон [0.0, 5.0].
     """
-    if not rec[0].strip():
+    if not isinstance(rec, tuple):
+        raise TypeError("rec должен быть кортежем")
+    if len(rec) != 3:
+        raise ValueError("кортеж должен содержать 3 элемента")
+    fio, group, gpa = rec
+    if not isinstance(fio, str):
+        raise TypeError("ФИО должно быть строкой")
+    if not isinstance(group, str):
+        raise TypeError("группа должна быть строкой")
+    if not isinstance(gpa, (int, float)):
+        raise TypeError("GPA должно быть числом (int или float)")
+    if not fio.strip():
         raise ValueError("пустое ФИО")
-    if not rec[1].strip():
+    if not group.strip():
         raise ValueError("пустая группа")
-    if not isinstance(rec[2], float):
-        raise TypeError("неверный тип GPA")
-    initials = rec[0]
-    initials = str.title(initials)
-    initials = [i for i in initials.split()]
-    last_name = initials[0]
-    if len(initials) == 2:
-        name = initials[1][0] + '.'
-        patronymic = ''
-    elif len(initials) == 3:
-        name = initials[1][0] + '.'
-        patronymic = initials[2][0] + '.'
-    group = rec[1]
-    gpa = rec[2]
-    return f'"{last_name} {name}{patronymic}, гр. {group}, GPA {gpa:.2f}"'
+    gpa_value = float(gpa)
+    if not (0.0 <= gpa_value <= 5.0):
+        raise ValueError("неверное значение GPA (должно быть от 0.0 до 5.0)")
+    normalized_fio = fio.strip()
+    normalized_fio = normalized_fio.title()
+    parts = normalized_fio.split()
+    if len(parts) not in (2, 3):
+        raise ValueError("ФИО должно состоять из 2 (Фамилия Имя) или 3 (Фамилия Имя Отчество) слов")
+    last_name = parts[0]
+    if len(parts) == 2:
+        name_initial = parts[1][0] + "."
+        patronymic_initial = ""
+    else:  # len(parts) == 3
+        name_initial = parts[1][0] + "."
+        patronymic_initial = parts[2][0] + "."
+    return f"{last_name} {name_initial}{patronymic_initial}, гр. {group.strip()}, GPA {gpa_value:.2f}"
 ```
 ![Вывод format_record](../../images/lab_2/img_07.png)
 

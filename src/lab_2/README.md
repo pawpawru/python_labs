@@ -141,7 +141,7 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
         ValueError: если строки разной длины (не прямоугольная матрица).    
     """
     if not mat:
-            return []
+        return []
     elif not all(len(i) == len(mat[0]) for i in mat):
         raise ValueError("Есть строки разной длины")
     else:

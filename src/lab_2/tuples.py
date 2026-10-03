@@ -48,7 +48,7 @@ def format_record(rec: tuple[str, str, float]) -> str:
     else:  # len(parts) == 3
         name_initial = parts[1][0] + "."
         patronymic_initial = parts[2][0] + "."
-    return f"{last_name} {name_initial}{patronymic_initial}, гр. {group.strip()}, GPA {gpa_value:.2f}"
+    return f"{last_name} {name_initial}{patronymic_initial}, гр. {group}, GPA {gpa_value:.2f}"
 
 if __name__ == "__main__":
     print(f'("Иванов Иван Иванович", "BIVT-25", 4.6) -> "{format_record(("Иванов Иван Иванович", "BIVT-25", 4.6))}"')

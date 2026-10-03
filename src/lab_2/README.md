@@ -141,7 +141,7 @@ def col_sums(mat: list[list[float | int]]) -> list[float]:
         ValueError: если строки разной длины (не прямоугольная матрица).    
     """
     if not mat:
-            return "Пустая матрица"
+            return []
     elif not all(len(i) == len(mat[0]) for i in mat):
         raise ValueError("Есть строки разной длины")
     else:
@@ -204,7 +204,7 @@ def format_record(rec: tuple[str, str, float]) -> str:
     else:  # len(parts) == 3
         name_initial = parts[1][0] + "."
         patronymic_initial = parts[2][0] + "."
-    return f"{last_name} {name_initial}{patronymic_initial}, гр. {group.strip()}, GPA {gpa_value:.2f}"
+    return f"{last_name} {name_initial}{patronymic_initial}, гр. {group}, GPA {gpa_value:.2f}"
 ```
 ![Вывод format_record](../../images/lab_2/img_07.png)
 

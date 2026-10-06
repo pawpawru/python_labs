@@ -22,33 +22,40 @@ def format_record(rec: tuple[str, str, float]) -> str:
         raise TypeError("rec должен быть кортежем")
     if len(rec) != 3:
         raise ValueError("кортеж должен содержать 3 элемента")
+
     fio, group, gpa = rec
+
     if not isinstance(fio, str):
         raise TypeError("ФИО должно быть строкой")
     if not isinstance(group, str):
         raise TypeError("группа должна быть строкой")
-    if not isinstance(gpa, (int, float)):
+    if isinstance(gpa, bool) or not isinstance(gpa, (int, float)):
         raise TypeError("GPA должно быть числом (int или float)")
-    if not fio.strip():
+
+    normalized_fio = " ".join(fio.split())
+    normalized_group = " ".join(group.split())
+
+    if not normalized_fio:
         raise ValueError("пустое ФИО")
-    if not group.strip():
+    if not normalized_group:
         raise ValueError("пустая группа")
+
     gpa_value = float(gpa)
     if not (0.0 <= gpa_value <= 5.0):
         raise ValueError("неверное значение GPA (должно быть от 0.0 до 5.0)")
-    normalized_fio = fio.strip()
-    normalized_fio = normalized_fio.title()
+
     parts = normalized_fio.split()
     if len(parts) not in (2, 3):
         raise ValueError("ФИО должно состоять из 2 (Фамилия Имя) или 3 (Фамилия Имя Отчество) слов")
-    last_name = parts[0]
-    if len(parts) == 2:
-        name_initial = parts[1][0] + "."
-        patronymic_initial = ""
-    else:  # len(parts) == 3
-        name_initial = parts[1][0] + "."
-        patronymic_initial = parts[2][0] + "."
-    return f"{last_name} {name_initial}{patronymic_initial}, гр. {group}, GPA {gpa_value:.2f}"
+
+    last_name = parts[0].capitalize()
+    name_initial = parts[1][0].upper() + "."
+
+    patronymic_initial = ""
+    if len(parts) == 3:
+        patronymic_initial = parts[2][0].upper() + "."
+
+    return f"{last_name} {name_initial}{patronymic_initial}, гр. {normalized_group}, GPA {gpa_value:.2f}"
 
 if __name__ == "__main__":
     print(f'("Иванов Иван Иванович", "BIVT-25", 4.6) -> "{format_record(("Иванов Иван Иванович", "BIVT-25", 4.6))}"')

@@ -202,7 +202,7 @@ def format_record(rec: tuple[str, str, float]) -> str:
 
     parts = normalized_fio.split()
     if len(parts) not in (2, 3):
-        raise ValueError("ФИО должно состоять из 2 (Фамилия Имя) или 3 (Фамилия Имя Отчество) слов")
+        raise ValueError("ФИО должно состоять из 2 или 3 слов")
 
     last_name = parts[0].capitalize()
     name_initial = parts[1][0].upper() + "."

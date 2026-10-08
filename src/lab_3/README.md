@@ -87,6 +87,7 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
 Рис. 4. Результат выполнения функции top_n
 
 Задание B
+
 Скрипт читает весь ввод до EOF
 ```python
 import sys

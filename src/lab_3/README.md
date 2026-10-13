@@ -88,7 +88,6 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
 
 Задание B
 
-Скрипт читает весь ввод до EOF
 ```python
 from lib.text import normalize, tokenize, count_freq, top_n
 

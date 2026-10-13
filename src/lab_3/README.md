@@ -14,8 +14,6 @@ def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
     Returns:
         text: нормализированный текст
     """
-    if type(text) != str:
-        raise TypeError('не тот тип данных')
     if casefold:
         text = text.casefold()
     else:
@@ -61,10 +59,6 @@ def count_freq(tokens: list[str]) -> dict[str, int]:
     Returns:
         freq: словарь вида: [слово] -> [количество повторений]
     """
-    if type(tokens) != list:
-        raise TypeError('не правильный тип входных данных')
-    if len(tokens) == 0:
-        raise ValueError('пустой список')
     freq = {}
     for token in tokens:
         freq[token] = freq.get(token, 0) + 1
@@ -86,10 +80,6 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
     Returns:
         data: список кортежей вида: (токен, количество повторений)
     """
-    if type(freq) != list:
-            raise TypeError('не правильный тип входных данных')
-    if len(freq) == 0:
-        raise ValueError('пустой список')
     return sorted(freq.items(), key=lambda x: (-x[1], x[0]))[:n]
 ```
 ![Вывод top_n](../../images/lab_3/img_04.png)

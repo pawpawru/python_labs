@@ -95,43 +95,47 @@ from text import normalize, tokenize, count_freq, top_n
 
 TABLE_MODE = True
 
-def print_top_words(top_words, use_table: bool):
-    if not top_words:
-        raise TypeError("Нет слов для отображения.")
-        return
+def print_top_words(top_n_list):
+    """
+    Выводит топ-N слов с их частотами в формате, заданном глобальной переменной TABLE_MODE.
 
-    if use_table:
-        max_word_len = max(len(word) for word, _ in top_words)
+    Параметры:
+        top_n_list (list[tuple[str, int]]): список кортежей (слово, частота).
+
+    Исключения:
+        ValueError: если передан пустой список top_n_list.
+    """
+    if not top_n_list:
+        raise ValueError("Список топ-слов не должен быть пустым.")
+
+    if TABLE_MODE:
+        max_word_len = max(len(word) for word, _ in top_n_list)
         header = f"{'слово':<{max_word_len}} | частота"
         separator = "-" * len(header)
         print(header)
         print(separator)
-        for word, count in top_words:
+        for word, count in top_n_list:
             print(f"{word:<{max_word_len}} | {count}")
     else:
-        for word, count in top_words:
+        for word, count in top_n_list:
             print(f"{word}:{count}")
 
-def analyze_text(text: str, use_table: bool):
-    if not text.strip():
-        print("Входной текст пуст.")
-        return
+text = sys.stdin.read()
 
-    tokens = tokenize(normalize(text))
-    
-    if not tokens:
-        raise TypeError("В тексте не найдено слов для анализа.")
-        return
+if not text.strip():
+    raise ValueError("Входная строка не должна быть пустой.")
 
-    freq_dict = count_freq(tokens)
-    total_words = sum(freq_dict.values())
-    unique_words = len(freq_dict)
-    top_5 = top_n(freq_dict)
+tokens = tokenize(normalize(text))
+freq_dict = count_freq(tokens)
 
-    print(f"Всего слов: {total_words}")
-    print(f"Уникальных слов: {unique_words}")
+total_words = sum(freq_dict.values())
+unique_words = len(freq_dict)
+top_5 = top_n(freq_dict)
 
-    print_top_words(top_5, use_table)
+print(f"Всего слов: {total_words}")
+print(f"Уникальных слов: {unique_words}")
+
+print_top_words(top_5)
 
 if __name__ == "__main__":
     text = sys.stdin.read()

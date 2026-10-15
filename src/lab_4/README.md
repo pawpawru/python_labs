@@ -119,14 +119,24 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-вход:
 
-'![input.txt](../../images/lab_4/img_04.png)'
+вход:
+```python
+Привет, мир! Привет!!!
+```
 
 консоль:
-
-![консоль](../../images/lab_4/img_01.png)
+```python
+Всего слов: 3
+Уникальных слов: 2
+Топ-5: 
+привет: 2
+мир: 1
+```
 
 report.csv:
-
-![report.txt](../../images/lab_4/img_02.png)
+```python
+word,count
+привет,2
+мир,1
+```

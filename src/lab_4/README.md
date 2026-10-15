@@ -119,5 +119,11 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-![input.txt](../../images/lab_4/img_01.png)
+вход:
+![input.txt](../../images/lab_4/img_04.png)
+
+консоль:
+![консоль](../../images/lab_4/img_01.png)
+
+report.csv:
 ![report.txt](../../images/lab_4/img_02.png)

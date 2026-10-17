@@ -1,4 +1,4 @@
-Лаботаторная работа № 4
+Лабораторная работа № 4
 
 Задание A
 
@@ -10,9 +10,12 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
     Важно: весь файл загружается в память - не следует использовать для больших файлов
     (сотни МБ и больше). Для них лучше обрабатывать данные по частям или построчно.
 
+    Пример выбора другой кодировки:
+        text = read_text("data/lab04/input.txt", encoding="cp1251")
+
     Args:
         path: путь к файлу (строка или Path).
-        encoding: кодировка файла (по умолчанию utf-8).
+        encoding: кодировка файла (по умолчанию utf-8, можно передать, например, "cp1251").
 
     Returns:
         Содержимое файла как строка. Для пустого файла - пустая строка.
@@ -26,25 +29,43 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
 ```
 
 ```python
-def write_csv(rows: Iterable[Sequence], path: str | Path, header: tuple[str, ...] | None = None) -> None:
+def write_csv(
+    rows: Iterable[Sequence],
+    path: str | Path,
+    header: tuple[str, ...] | None = None,
+) -> None:
     """
-    Записывает данные в CSV-файл. Если файл уже есть - перезапишет его.
+    Записывает данные в CSV-файл с разделителем ','. Если файл уже есть - перезапишет его.
 
     Особенности:
         - Если rows пустой и header не задан - создаётся пустой файл.
         - Если rows пустой, но header задан - в файле будет только заголовок.
 
     Args:
-        rows: строки данных (каждая - последовательность значений).
+        rows: строки данных (каждая - последовательность значений одинаковой длины).
         path: путь к CSV-файлу.
         header: необязательный заголовок таблицы.
 
     Raises:
+        ValueError: если строки в rows имеют разную длину (или не совпадают с длиной header).
         OSError: при проблемах с доступом к файлу.
-        TypeError: если строки не являются последовательностями.
     """
     p = Path(path)
     rows_list = list(rows)
+
+    if rows_list:
+        expected_len = len(rows_list[0])
+        for i, r in enumerate(rows_list):
+            if len(r) != expected_len:
+                raise ValueError(
+                    f"Строка {i} имеет длину {len(r)}, ожидалось {expected_len}"
+                )
+        if header is not None and len(header) != expected_len:
+            raise ValueError(
+                f"Длина заголовка ({len(header)}) не совпадает с длиной строк ({expected_len})"
+            )
+
+    ensure_parent_dir(p)
 
     with p.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
@@ -79,12 +100,14 @@ if __name__ == "__main__":
 
 Задание B
 ```python
+import sys
 from lib.text import normalize, tokenize, count_freq, top_n
 from lab_4.io_txt_csv import read_text, write_csv
 
 INPUT_PATH = "..\\data\\lab_4\\input.txt"
 OUTPUT_PATH = "..\\data\\lab_4\\report.csv"
-ENCODING = "utf-8"
+ENCODING = "cp1251"
+
 
 def sorted_word_counts(freq: dict[str, int]) -> list[tuple[str, int]]:
     return sorted(freq.items(), key=lambda pair: (-pair[1], pair[0]))
@@ -95,7 +118,10 @@ def main():
         raw_text = read_text(INPUT_PATH, encoding=ENCODING)
     except FileNotFoundError:
         print(f"Ошибка: файл не найден: {INPUT_PATH}")
-        return
+        sys.exit(1)
+    except UnicodeDecodeError:
+        print(f"Ошибка: файл {INPUT_PATH} не удалось прочитать в кодировке {ENCODING}")
+        sys.exit(1)
 
     normalized_text = normalize(raw_text)
     tokens = tokenize(normalized_text)
@@ -120,6 +146,8 @@ if __name__ == "__main__":
     main()
 ```
 
+Тест A
+
 вход:
 ```python
 Привет, мир! Привет!!!
@@ -139,4 +167,40 @@ report.csv:
 word,count
 привет,2
 мир,1
+```
+
+Тест B
+
+вход:
+пустая строка
+
+консоль:
+```python
+Всего слов: 0
+Уникальных слов: 0
+Топ-5: 
+```
+
+report.csv:
+```python
+word,count
+```
+
+Тест C
+
+вход:
+Привет (в кодировке cp1251)
+
+консоль:
+```python
+Всего слов: 1
+Уникальных слов: 1
+Топ-5: 
+привет: 1
+```
+
+report.csv:
+```python
+word,count
+привет,1
 ```

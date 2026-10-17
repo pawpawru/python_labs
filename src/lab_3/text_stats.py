@@ -38,8 +38,4 @@ def main():
             print(f'{word}:{count}')
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     main()
-=======
-    main()
->>>>>>> f34af0720c0593c991abce2fc6331c6f6bfb925b

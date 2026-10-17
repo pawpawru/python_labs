@@ -1,9 +1,11 @@
+import sys
 from lib.text import normalize, tokenize, count_freq, top_n
 from lab_4.io_txt_csv import read_text, write_csv
 
 INPUT_PATH = "..\\data\\lab_4\\input.txt"
 OUTPUT_PATH = "..\\data\\lab_4\\report.csv"
 ENCODING = "utf-8"
+
 
 def sorted_word_counts(freq: dict[str, int]) -> list[tuple[str, int]]:
     return sorted(freq.items(), key=lambda pair: (-pair[1], pair[0]))
@@ -14,7 +16,10 @@ def main():
         raw_text = read_text(INPUT_PATH, encoding=ENCODING)
     except FileNotFoundError:
         print(f"Ошибка: файл не найден: {INPUT_PATH}")
-        return
+        sys.exit(1)
+    except UnicodeDecodeError:
+        print(f"Ошибка: файл {INPUT_PATH} не удалось прочитать в кодировке {ENCODING}")
+        sys.exit(1)
 
     normalized_text = normalize(raw_text)
     tokens = tokenize(normalized_text)

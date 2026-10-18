@@ -1,206 +1,43 @@
 Лабораторная работа № 4
 
+Команды запуска
+
+```powershell
+# Задание A
+работает без дополнительных команд в терминале
+
+# Задание B
+cd src
+py -m lab_4.text_report
+```
+
+Описание реализации и краевых случаев
+
+* Настройка путей и работа с кодировками: по умолчанию функции и скрипт работают с кодировкой `UTF-8`. Пути к файлам и кодировка задаются через константы `INPUT_PATH`, `OUTPUT_PATH` и `ENCODING` в начале `text_report.py` (либо передаются аргументом `encoding` при вызове `read_text(path, encoding="cp1251")`). Если кодировка файла не совпадает с указанной, перехватывается исключение `UnicodeDecodeError`, выводится сообщение об ошибке и программа завершается с кодом `sys.exit(1)`.
+* Политика для пустого входа: если входной файл пустой (или не содержит слов), функция `read_text` возвращает пустую строку `""`. Скрипт `text_report.py` выводит в консоль нулевую статистику (`Всего слов: 0`, `Уникальных слов: 0`), а в выходной файл `report.csv` записывается только заголовок (`word,count`).
+* Отсутствие входного файла: если файл по указанному пути не существует (`FileNotFoundError`), скрипт выводит в консоль сообщение об ошибке и завершает работу через `sys.exit(1)`.
+* Большие файлы: в рамках лабораторной работы файл читается целиком в память (`Path.read_text`). В реальных задачах при работе с большими файлами (сотни МБ и более) следует использовать построчное чтение, чтобы избежать переполнения оперативной памяти.
+
 Задание A
 
-```python
-def read_text(path: str | Path, encoding: str = "utf-8") -> str:
-    """
-    Читает файл и возвращает его содержимое одной строкой.
+Результат мини-тестов
 
-    Важно: весь файл загружается в память - не следует использовать для больших файлов
-    (сотни МБ и больше). Для них лучше обрабатывать данные по частям или построчно.
-
-    Пример выбора другой кодировки:
-        text = read_text("data/lab04/input.txt", encoding="cp1251")
-
-    Args:
-        path: путь к файлу (строка или Path).
-        encoding: кодировка файла (по умолчанию utf-8, можно передать, например, "cp1251").
-
-    Returns:
-        Содержимое файла как строка. Для пустого файла - пустая строка.
-
-    Raises:
-        FileNotFoundError: если файл не найден.
-        UnicodeDecodeError: если кодировка не подходит.
-    """
-    p = Path(path)
-    return p.read_text(encoding=encoding)
-```
-
-```python
-def write_csv(
-    rows: Iterable[Sequence],
-    path: str | Path,
-    header: tuple[str, ...] | None = None,
-) -> None:
-    """
-    Записывает данные в CSV-файл с разделителем ','. Если файл уже есть - перезапишет его.
-
-    Особенности:
-        - Если rows пустой и header не задан - создаётся пустой файл.
-        - Если rows пустой, но header задан - в файле будет только заголовок.
-
-    Args:
-        rows: строки данных (каждая - последовательность значений одинаковой длины).
-        path: путь к CSV-файлу.
-        header: необязательный заголовок таблицы.
-
-    Raises:
-        ValueError: если строки в rows имеют разную длину (или не совпадают с длиной header).
-        OSError: при проблемах с доступом к файлу.
-    """
-    p = Path(path)
-    rows_list = list(rows)
-
-    if rows_list:
-        expected_len = len(rows_list[0])
-        for i, r in enumerate(rows_list):
-            if len(r) != expected_len:
-                raise ValueError(
-                    f"Строка {i} имеет длину {len(r)}, ожидалось {expected_len}"
-                )
-        if header is not None and len(header) != expected_len:
-            raise ValueError(
-                f"Длина заголовка ({len(header)}) не совпадает с длиной строк ({expected_len})"
-            )
-
-    ensure_parent_dir(p)
-
-    with p.open("w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
-        if header is not None:
-            w.writerow(header)
-        for r in rows_list:
-            w.writerow(r)
-```
-
-```python
-def ensure_parent_dir(path: str | Path) -> None:
-    """
-    Создаёт родительские папки для указанного пути, если их нет.
-
-    Args:
-        path: путь к файлу или папке.
-    """
-    p = Path(path)
-    p.parent.mkdir(parents=True, exist_ok=True)
-```
-
-Тесты:
-```python
-if __name__ == "__main__":
-    txt = read_text("data\\lab_4\\input.txt")
-    print(txt)
-
-    write_csv([("word", "count"), ("test", 3)], "data\\lab_4\\check.csv")
-    print("CSV создан")
-```
-![Тесты io_txt_csv.py](../../images/lab_4/img_03.png)
+![Вывод мини-тестов](../../images/lab_4/img_01.png)
 
 Задание B
-```python
-import sys
-from lib.text import normalize, tokenize, count_freq, top_n
-from lab_4.io_txt_csv import read_text, write_csv
 
-INPUT_PATH = "..\\data\\lab_4\\input.txt"
-OUTPUT_PATH = "..\\data\\lab_4\\report.csv"
-ENCODING = "cp1251"
+Тест A (Привет, мир! Привет!!!)
 
+![Консоль](../../images/lab_4/img_02.png)
+![Report](../../images/lab_4/img_03.png)
 
-def sorted_word_counts(freq: dict[str, int]) -> list[tuple[str, int]]:
-    return sorted(freq.items(), key=lambda pair: (-pair[1], pair[0]))
+Тест B (пустой файл)
 
+![Консоль](../../images/lab_4/img_04.png)
+![Report](../../images/lab_4/img_05.png)
 
-def main():
-    try:
-        raw_text = read_text(INPUT_PATH, encoding=ENCODING)
-    except FileNotFoundError:
-        print(f"Ошибка: файл не найден: {INPUT_PATH}")
-        sys.exit(1)
-    except UnicodeDecodeError:
-        print(f"Ошибка: файл {INPUT_PATH} не удалось прочитать в кодировке {ENCODING}")
-        sys.exit(1)
+Тест C (Привет в кодировке cp1251)
 
-    normalized_text = normalize(raw_text)
-    tokens = tokenize(normalized_text)
-    total_words = len(tokens)
+![Консоль](../../images/lab_4/img_06.png)
+![Report](../../images/lab_4/img_07.png)
 
-    freq = count_freq(tokens)
-    unique_words = len(freq)
-
-    all_rows = sorted_word_counts(freq)
-    top5 = top_n(freq, n=5)
-
-    write_csv(all_rows, OUTPUT_PATH, header=("word", "count"))
-
-    print(f"Всего слов: {total_words}")
-    print(f"Уникальных слов: {unique_words}")
-    print("Топ-5: ")
-    for word, count in top5:
-        print(f"{word}: {count}")
-
-
-if __name__ == "__main__":
-    main()
-```
-
-Тест A
-
-вход:
-```python
-Привет, мир! Привет!!!
-```
-
-консоль:
-```python
-Всего слов: 3
-Уникальных слов: 2
-Топ-5: 
-привет: 2
-мир: 1
-```
-
-report.csv:
-```python
-word,count
-привет,2
-мир,1
-```
-
-Тест B
-
-вход:
-пустая строка
-
-консоль:
-```python
-Всего слов: 0
-Уникальных слов: 0
-Топ-5: 
-```
-
-report.csv:
-```python
-word,count
-```
-
-Тест C
-
-вход:
-Привет (в кодировке cp1251)
-
-консоль:
-```python
-Всего слов: 1
-Уникальных слов: 1
-Топ-5: 
-привет: 1
-```
-
-report.csv:
-```python
-word,count
-привет,1
-```

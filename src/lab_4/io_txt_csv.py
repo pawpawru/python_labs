@@ -84,3 +84,11 @@ def write_csv(
             w.writerow(header)
         for r in rows_list:
             w.writerow(r)
+
+
+if __name__ == "__main__":
+    txt = read_text("data/lab_4/input.txt")  # должен вернуть строку
+    print(txt)
+
+    write_csv([("word", "count"), ("test", 3)], "data/lab_4/check.csv")  # создаст CSV
+    print("CSV создан")

@@ -2,8 +2,8 @@ import sys
 from lib.text import normalize, tokenize, count_freq, top_n
 from lab_4.io_txt_csv import read_text, write_csv
 
-INPUT_PATH = "..\\data\\lab_4\\input.txt"
-OUTPUT_PATH = "..\\data\\lab_4\\report.csv"
+INPUT_PATH = "../data/lab_4/input.txt"
+OUTPUT_PATH = "../data/lab_4/report.csv"
 ENCODING = "utf-8"
 
 

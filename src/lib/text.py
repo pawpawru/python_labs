@@ -62,6 +62,33 @@ def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
         data: список кортежей вида: (токен, количество повторений)
     """
     return sorted(freq.items(), key=lambda x: (-x[1], x[0]))[:n]
+
+from pathlib import Path
+
+def read_text(path: str | Path, encoding: str = "utf-8") -> str:
+    """
+    Читает файл и возвращает его содержимое одной строкой.
+
+    Важно: весь файл загружается в память - не следует использовать для больших файлов
+    (сотни МБ и больше). Для них лучше обрабатывать данные по частям или построчно.
+
+    Пример выбора другой кодировки:
+        text = read_text("data/lab04/input.txt", encoding="cp1251")
+
+    Args:
+        path: путь к файлу (строка или Path).
+        encoding: кодировка файла (по умолчанию utf-8, можно передать, например, "cp1251").
+
+    Returns:
+        Содержимое файла как строка. Для пустого файла - пустая строка.
+
+    Raises:
+        FileNotFoundError: если файл не найден.
+        UnicodeDecodeError: если кодировка не подходит.
+    """
+    p = Path(path)
+    return p.read_text(encoding=encoding)
+
 if __name__ == "__main__":
     print(r"ПрИвЕт\nМИр\t ->", normalize("ПрИвЕт\nМИр\t"))
     print("ёжик, Ёлка ->", normalize("ёжик, Ёлка"))

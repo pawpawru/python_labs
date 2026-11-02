@@ -2,8 +2,8 @@ import argparse
 import json
 import sys
 
-from lab_5.json_csv import json_to_csv, csv_to_json
-from lab_5.csv_xlsx import csv_to_xlsx
+from lib.json_csv import json_to_csv, csv_to_json
+from lib.csv_xlsx import csv_to_xlsx
 
 
 def main() -> None:

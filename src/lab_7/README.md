@@ -9,7 +9,7 @@ py -m lab_7.bech
 
 ## Таблица бенчмарка
 
-'''
+```csv
 task,n,impl,seconds
 sorting,1000,sorted,0.000215
 sorting,1000,insertion_sort,0.041272
@@ -29,7 +29,7 @@ two_sum,1000,two_sum_brute,0.000006
 two_sum,1000,two_sum_fast,0.000010
 two_sum,10000,two_sum_brute,0.000005
 two_sum,10000,two_sum_fast,0.000005
-'''
+```
 
 ## Выводы
 

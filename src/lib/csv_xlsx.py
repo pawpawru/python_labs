@@ -34,6 +34,8 @@ def csv_to_xlsx(csv_path: str, xlsx_path: str) -> None:
         max_len = 0
         col_letter = col[0].column_letter
         for cell in col:
+
+            
             val_str = str(cell.value) if cell.value is not None else ""
             if len(val_str) > max_len:
                 max_len = len(val_str)
